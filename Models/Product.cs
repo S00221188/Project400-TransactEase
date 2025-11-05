@@ -11,7 +11,7 @@ namespace Project400_TransactEase.Models
         public int ProductID { get; set; }
         public string ProductName { get; set; } = string.Empty;
         public decimal ProductPrice { get; set; }
-        public int ProductStockCount { get; set; }
+        public decimal ProductStockCount { get; set; } //Changed to decimal to enable half pints (Shared inventory between Pint & Half pint)
         public string ProductType { get; set; }
         public bool IsDiscontinued { get; set; }
         
