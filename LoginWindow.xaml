@@ -25,7 +25,7 @@
             <!-- Buttons -->
             <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
                 <Button Name="ClockInBtn" Click="ClockInBtn_Click" Content="Clock In" Width="100" Background="Blue" Foreground="White" Margin="0,5,5,0"/>
-                <Button Name="ClockOutBtn" Click="ClockOutBtn_Click" Content="Clock In" Width="100" Background="Red" Foreground="White" Margin="5,5,0,0"/>
+                <Button Name="ClockOutBtn" Click="ClockOutBtn_Click" Content="Clock Out" Width="100" Background="Red" Foreground="White" Margin="5,5,0,0"/>
             </StackPanel>
             <Button Content="Login" Name="LoginBtn" Click="LoginBtn_Click" Margin="10,10" Height="35" Background="LightGreen" FontWeight="Bold"/>
 
