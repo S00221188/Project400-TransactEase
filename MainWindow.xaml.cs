@@ -40,7 +40,7 @@ namespace Project400_TransactEase
 
         private void Bill_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Bill feature not implemented yet.");
+            MessageBox.Show("Bill feature not implemented yet."); //Implement a split bill option here or elsewhere
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace Project400_TransactEase
 
         private void Pay_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Pay feature not implemented yet.");
+            MessageBox.Show("Pay feature not implemented yet."); // Cash Card or voucher
         }
 
         private void Tabs_Click(object sender, RoutedEventArgs e)
