@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Project400_TransactEase.Models;
 
 namespace Project400_TransactEase
 {
@@ -20,9 +21,11 @@ namespace Project400_TransactEase
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private Employee loggedInEmployee;  
+        public MainWindow(Employee employee)
         {
             InitializeComponent();
+            loggedInEmployee = employee;
         }
     }
 }

@@ -21,14 +21,15 @@
             <TextBox Name="UsernameBox" Margin="10,5"/>
             
             <TextBlock Text="Password" Foreground="#00F2FF" Background="#3D3D3D" Margin="10,20,10,0"/>
-            <TextBox Name="PasswordBox" Margin="10,5"/>
+            <PasswordBox Name="PasswordBox" Margin="10,5"/>
             <!-- Buttons -->
             <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
-                <Button Name="ClockInBtn" Click="ClockInBtn_Click" Content="Clock In" Width="100" Background="Blue" Foreground="White" Margin="0,5,5,0"/>
+                <Button Name="ClockInBtn" Click="LoginAndClockInBtn_Click" Content="Clock In" Width="100" Background="Blue" Foreground="White" Margin="0,5,5,0"/>
                 <Button Name="ClockOutBtn" Click="ClockOutBtn_Click" Content="Clock Out" Width="100" Background="Red" Foreground="White" Margin="5,5,0,0"/>
             </StackPanel>
-            <Button Content="Login" Name="LoginBtn" Click="LoginBtn_Click" Margin="10,10" Height="35" Background="LightGreen" FontWeight="Bold"/>
+            <Button Content="Login" Name="LoginBtn" Click="LoginAndClockInBtn_Click" Margin="10,10" Height="35" Background="LightGreen" FontWeight="Bold"/>
 
+           <TextBlock Name="ErrorText" Foreground="Red" Margin="10,10,10,0" TextWrapping="Wrap" TextAlignment="Center"/>
         </StackPanel>
         <!-- Right Panel (Reserved for Future Development, Carousel for Venue events)-->
         <Grid Grid.Column="1" Background="#3D1F1F">
