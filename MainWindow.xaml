@@ -5,8 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project400_TransactEase"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="720" Width="1200" WindowStartupLocation="CenterScreen" Background="#3D3D3D">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Top Bar -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="3" Background="#3D3D3D" Height="50">
+            <Button Content="Logout" Click="Logout_Click" Margin="10" Width="80" Background="Red" Foreground="White"/>
+            <TextBlock Name="WelcomeText" Foreground="#00F2FF" FontSize="16" VerticalAlignment="Center" Margin="20,0"/>
+            <Button Content="Settings" Click="Settings_Click" Margin="10" Width="80" Background="Gold" Foreground="Black"/>
+        </StackPanel>
+
+        <!-- Left Panel -->
+        <Grid Grid.Row="1" Grid.Column="0" Background="#2E2E2E" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="Current Bill" FontWeight="Bold" FontSize="16" Foreground="#00F2FF" Margin="0,0,0,10"/>
+                <ListBox Name="BillList" Height="446" Background="White"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10,0,10">
+                <TextBlock Text="Total: " FontWeight="Bold" Foreground="White"/>
+                <TextBlock Name="TotalText" FontSize="14" Margin="5,0,0,0" Foreground="White"/>
+            </StackPanel>
+
+            <UniformGrid Grid.Row="2" Columns="2" Rows="2" Margin="0,10,0,0">
+                <Button Content="Bill" Click="Bill_Click" Background="#00F2FF" Foreground="Black" Margin="5"/>
+                <Button Content="Clear" Click="Clear_Click" Background="#00F2FF" Foreground="Black" Margin="5"/>
+                <Button Content="Pay" Click="Pay_Click" Background="#00F2FF" Foreground="Black" Margin="5"/>
+                <Button Content="Tabs" Click="Tabs_Click" Background="#00F2FF" Foreground="Black" Margin="5"/>
+            </UniformGrid>
+        </Grid>
+
+        <!-- Product Panel -->
+        <WrapPanel Name="ProductPanel" Grid.Row="1" Grid.Column="1" Margin="10" VerticalAlignment="Top"/>
+
+        <!-- Navigation Bar -->
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal" Background="#00F2FF" Height="50" HorizontalAlignment="Center">
+            <Button Content="All" Click="Filter_Click" Tag="All" Margin="5" Background="White"/>
+            <Button Content="Pint" Click="Filter_Click" Tag="Pint" Margin="5" Background="White"/>
+            <Button Content="Shot" Click="Filter_Click" Tag="Shot" Margin="5" Background="White"/>
+            <Button Content="Cocktail" Click="Filter_Click" Tag="Cocktail" Margin="5" Background="White"/>
+            <Button Content="Soft Drink" Click="Filter_Click" Tag="Soft Drink" Margin="5" Background="White"/>
+        </StackPanel>
     </Grid>
 </Window>

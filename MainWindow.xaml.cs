@@ -27,5 +27,40 @@ namespace Project400_TransactEase
             InitializeComponent();
             loggedInEmployee = employee;
         }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Logout feature not implemented yet.");
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Settings feature not implemented yet.");
+        }
+
+        private void Bill_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Bill feature not implemented yet.");
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Clear feature not implemented yet.");
+        }
+
+        private void Pay_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Pay feature not implemented yet.");
+        }
+
+        private void Tabs_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Tabs feature not implemented yet.");
+        }
+
+        private void Filter_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Filter feature not implemented yet.");
+        }
     }
 }
