@@ -24,6 +24,7 @@ namespace Project400_TransactEase
     {
         private Employee loggedInEmployee; 
         private List<Product> allProducts = new List<Product>();
+        private List<Product> currentBill = new List<Product>();
         public MainWindow(Employee employee)
         {
             InitializeComponent();
@@ -59,7 +60,18 @@ namespace Project400_TransactEase
         }
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
-           //Implementing next
+           //adds products to current bill - 1st phase, Multiple running tabs not currently developed
+           if (sender is Button btn && btn.Tag is Product product)
+            {
+                currentBill.Add(product);
+                BillList.Items.Add($"{product.ProductName} - €{product.ProductPrice}");
+                UpdateTotal();
+            }
+        }
+        private void UpdateTotal()
+        {
+            decimal total = currentBill.Sum(p => p.ProductPrice);
+            TotalText.Text= $"Total: €{total:F2}";
         }
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
