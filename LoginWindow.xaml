@@ -14,14 +14,25 @@
         <!-- Sidebar -->
         <StackPanel Background="#3D3D3D" Grid.Column="0" VerticalAlignment="Stretch">
             <Image Source="Assets/TransactEaseLogo.png" Height="100" Margin="10"/>
-            <TextBlock Text="TransactEase" FontSize="20" FontWeight="Bold" Foreground="#00F2FF" HorizontalAlignment="Center" Margin="10"/>
-            
-        <!-- Username + Password Fields (Future plans for biometric login -->
-            <TextBlock Text="Username" Foreground="#00F2FF" Background="#3D3D3D" Margin="10,20,10,0"/>
-            <TextBox Name="UsernameBox" Margin="10,5"/>
-            
-            <TextBlock Text="Password" Foreground="#00F2FF" Background="#3D3D3D" Margin="10,20,10,0"/>
-            <PasswordBox Name="PasswordBox" Margin="10,5"/>
+
+            <!-- Employee Pin entry display Future plans for biometric login -->
+            <TextBlock Text="Enter PIN" Foreground="#00F2FF" Margin="10,20,10,0"/>
+            <PasswordBox Name="PinBox" Margin="10,5" FontSize="10" HorizontalContentAlignment="Center" VerticalAlignment="Center" MaxLength="6"></PasswordBox>
+            <!-- Number Pad -->
+            <UniformGrid Rows="4" Columns="3" Margin="10">
+                <Button Content="1" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="2" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="3" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="4" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="5" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="6" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="7" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="8" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="9" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="Clear" Click="ClearPinButton_Click" FontSize="15"/>
+                <Button Content="0" Click="PinButton_Click" FontSize="15"/>
+                <Button Content="Del" Click="BackSpaceButton_Click" FontSize="15"/>
+            </UniformGrid>
             <!-- Buttons -->
             <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
                 <Button Name="ClockInBtn" Click="LoginAndClockInBtn_Click" Content="Clock In" Width="100" Background="Blue" Foreground="White" Margin="0,5,5,0"/>
@@ -29,11 +40,11 @@
             </StackPanel>
             <Button Content="Login" Name="LoginBtn" Click="LoginAndClockInBtn_Click" Margin="10,10" Height="35" Background="LightGreen" FontWeight="Bold"/>
 
-           <TextBlock Name="ErrorText" Foreground="Red" Margin="10,10,10,0" TextWrapping="Wrap" TextAlignment="Center"/>
+            <TextBlock Name="ErrorText" Foreground="Red" Margin="10,10,10,0" TextWrapping="Wrap" TextAlignment="Center"/>
         </StackPanel>
         <!-- Right Panel (Reserved for Future Development, Carousel for Venue events)-->
         <Grid Grid.Column="1" Background="#3D1F1F">
-            
+
         </Grid>
     </Grid>
 </Window>

@@ -26,7 +26,7 @@
                 new Models.Employee
                 {
                     Username = "admin",
-                    Password = BCrypt.HashPassword("Admin123"),
+                    Password = BCrypt.HashPassword("314159"), //Password changed now to Pin code
                     FirstName = "Malachy",
                     LastName = "Sharkey",
                     Role = "Admin"
@@ -34,7 +34,7 @@
 
             //Seeding Initial Products
             context.Products.AddOrUpdate(p => p.ProductName,
-        // DRAFT PINTS
+        // DRAFT PINTS - ChatGPT Products generated
         new Product { ProductName = "Guinness Pint", ProductPrice = 6.00m, ProductType = "Draft", ProductStockCount = 50 },
         new Product { ProductName = "Heineken Pint", ProductPrice = 6.00m, ProductType = "Draft", ProductStockCount = 50 },
         new Product { ProductName = "Carlsberg Pint", ProductPrice = 5.80m, ProductType = "Draft", ProductStockCount = 40 },
@@ -44,12 +44,12 @@
         new Product { ProductName = "Smithwick’s Pint", ProductPrice = 5.80m, ProductType = "Draft", ProductStockCount = 30 },
         //DRAFT HALF PINT (Will later share stock with parent Pint)
         //Will reduce stock by 0.5
-        new Product { ProductName = "Guinness Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 50 }, 
-        new Product { ProductName = "Heineken Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 50 }, 
-        new Product { ProductName = "Carlsberg Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 40 }, 
-        new Product { ProductName = "Coors Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 45 }, 
-        new Product { ProductName = "Rockshore Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 40 }, 
-        new Product { ProductName = "Hop House 13 Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 35 }, 
+        new Product { ProductName = "Guinness Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 50 },
+        new Product { ProductName = "Heineken Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 50 },
+        new Product { ProductName = "Carlsberg Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 40 },
+        new Product { ProductName = "Coors Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 45 },
+        new Product { ProductName = "Rockshore Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 40 },
+        new Product { ProductName = "Hop House 13 Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 35 },
         new Product { ProductName = "Smithwick’s Half Pint", ProductPrice = 3.50m, ProductType = "Draft", ProductStockCount = 30 },
         // BOTTLES
         new Product { ProductName = "Corona Bottle", ProductPrice = 5.50m, ProductType = "Bottle", ProductStockCount = 30 },
@@ -93,5 +93,5 @@
         new Product { ProductName = "Peanuts", ProductPrice = 2.00m, ProductType = "Snack", ProductStockCount = 80 }
         );
         }
-    } 
+    }
 }

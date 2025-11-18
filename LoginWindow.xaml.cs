@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,19 +28,28 @@ namespace Project400_TransactEase
 
         private void ClockOutBtn_Click(object sender, RoutedEventArgs e)
         {
-            string username = UsernameBox.Text;
-            string password = PasswordBox.Password;
+            //string username = UsernameBox.Text;
+            //string password = PasswordBox.Password;
+            string pin = PinBox.Password;
 
             using (var db = new AppDBContext())
             {
-                var employee = db.Employees.FirstOrDefault(u => u.Username == username);
+                //var employee = db.Employees.FirstOrDefault(u => u.Username == username);
 
-                if (employee == null || !BCrypt.Net.BCrypt.Verify(password, employee.Password)) 
+                //if (employee == null || !BCrypt.Net.BCrypt.Verify(password, employee.Password)) 
+                //{
+                //    ErrorText.Text = "Invalid username or password.";
+                //    return;
+                //} 
+
+                var employee = db.Employees.ToList().FirstOrDefault(u => BCrypt.Net.BCrypt.Verify(pin, u.Password));
+                if (employee == null)
                 {
-                    ErrorText.Text = "Invalid username or password.";
+                    ErrorText.Text = "Invalid PIN.";
                     return;
-                } 
+                }
 
+                //Checking for a running Clock-in Record
                 var openClockIn = db.ClockInRecords
                     .FirstOrDefault(r => r.EmployeeID == employee.EmployeeID && r.ClockOutTime == null);
 
@@ -66,30 +76,38 @@ namespace Project400_TransactEase
                     );
 
                 //Clear User detail fields
-                UsernameBox.Clear();
-                PasswordBox.Clear();
+                //UsernameBox.Clear();
+                //PasswordBox.Clear();
+                PinBox.Clear();
                 ErrorText.Text = string.Empty;
-                    
+
             }
         }
 
         private void LoginAndClockInBtn_Click(object sender, RoutedEventArgs e)
         {
-            string username = UsernameBox.Text;
-            string password = PasswordBox.Password;
-
+            // string username = UsernameBox.Text;
+            // string password = PasswordBox.Password;
+            string pin = PinBox.Password;
             var clickedButton = sender as Button;
 
             using (var db = new AppDBContext())
             {
-                var employee = db.Employees.FirstOrDefault(u => u.Username == username);
+                //var employee = db.Employees.FirstOrDefault(u => u.Username == username);
 
-                if (employee == null || !BCrypt.Net.BCrypt.Verify(password, employee.Password))
+                //if (employee == null || !BCrypt.Net.BCrypt.Verify(password, employee.Password))
+                //{
+                //    ErrorText.Text = "Invalid username or password.";
+                //    return;
+                //}
+
+                var employee = db.Employees.ToList().FirstOrDefault(u => BCrypt.Net.BCrypt.Verify(pin, u.Password));
+                if (employee == null)
                 {
-                    ErrorText.Text = "Invalid username or password.";
+                    ErrorText.Text = "Invalid PIN.";
                     return;
                 }
-                
+
                 //Checking for a running Clock-in Record
                 bool isAlreadyClockedIn = db.ClockInRecords
                     .Any(r => r.EmployeeID == employee.EmployeeID && r.ClockOutTime == null);
@@ -107,7 +125,7 @@ namespace Project400_TransactEase
                     //Employee now clocked in (Saves someone forgetting to clock in!)
                     MessageBox.Show($"Clock-in successful for {employee.FirstName} {employee.LastName}. \nYou are now logged in. Enjoy your shift!", "Clocked-In", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                else 
+                else
                 {
                     var clockInTime = db.ClockInRecords
                     .Where(r => r.EmployeeID == employee.EmployeeID && r.ClockOutTime == null)
@@ -115,13 +133,36 @@ namespace Project400_TransactEase
                     .FirstOrDefault();
 
                     TimeSpan timeSinceClockIn = DateTime.Now - clockInTime;
-                    MessageBox.Show($"Welcome back, {employee.FirstName}.\n" + 
+                    MessageBox.Show($"Welcome back, {employee.FirstName}.\n" +
                         $"You clocked in {timeSinceClockIn.Hours} hour(s) & {timeSinceClockIn.Minutes} minute(s) ago.", "Login Successful", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 //Navigate to main window when successful
                 MainWindow main = new MainWindow(employee); //Passing employee object
                 main.Show();
                 this.Close();
+            }
+        }
+
+        //Pin Pad Functionality
+        private void PinButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn)
+            {
+                if (PinBox.Password.Length < PinBox.MaxLength)
+                {
+                    PinBox.Password += btn.Content.ToString();
+                }
+            }
+        }
+        private void ClearPinButton_Click(object sender, RoutedEventArgs e)
+        {
+            PinBox.Password = string.Empty;
+        }
+        private void BackSpaceButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PinBox.Password.Length > 0)
+            {
+                PinBox.Password = PinBox.Password.Substring(0, PinBox.Password.Length - 1);
             }
         }
     }
