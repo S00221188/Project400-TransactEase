@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -71,11 +72,39 @@ namespace Project400_TransactEase
         private void UpdateTotal()
         {
             decimal total = currentBill.Sum(p => p.ProductPrice);
-            TotalText.Text= $"Total: €{total:F2}";
+            TotalText.Text= $"€{total:F2}";
+        }
+        private void Filter_Click(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button btn && btn.Tag is string productType)
+            {
+                ProductPanel.Children.Clear();
+                var filter = productType == "All" ? allProducts : allProducts.Where(p => p.ProductType == productType).ToList(); //Co-Pilot suggested improvement
+
+                foreach (var product in filter)
+                {
+                    var button = new Button
+                    {
+                        Content = $"{product.ProductName}\n€{product.ProductPrice}",
+                        Tag = product,
+                        Width = 120,
+                        Height = 60,
+                        Margin = new Thickness(5),
+                        Background = new SolidColorBrush(Color.FromRgb(0, 242, 255)),
+                        Foreground = Brushes.Black,
+                        FontWeight = FontWeights.Bold
+                    };
+                    button.Click += ProductButton_Click;
+                    ProductPanel.Children.Add(button);
+                }
+            }
         }
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Logout feature not implemented yet.");
+            var login = new LoginWindow();
+            login.Show();
+            this.Close();
+            MessageBox.Show("Logged out successfully.");
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
@@ -103,9 +132,6 @@ namespace Project400_TransactEase
             MessageBox.Show("Tabs feature not implemented yet.");
         }
 
-        private void Filter_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Filter feature not implemented yet.");
-        }
+        
     }
 }
