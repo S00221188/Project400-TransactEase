@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,13 +22,45 @@ namespace Project400_TransactEase
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Employee loggedInEmployee;  
+        private Employee loggedInEmployee; 
+        private List<Product> allProducts = new List<Product>();
         public MainWindow(Employee employee)
         {
             InitializeComponent();
             loggedInEmployee = employee;
+            LoadProducts();
         }
 
+        private void LoadProducts()
+        {
+            ProductPanel.Children.Clear();
+
+            using (var db = new AppDBContext())
+            {
+                allProducts = db.Products.Where(p => !p.IsDiscontinued).OrderBy(p => p.ProductType).ToList();
+            }
+            // Create buttons for each product
+            foreach (var product in allProducts)
+            {
+                var button = new Button
+                {
+                    Content = $"{product.ProductName}\n€{product.ProductPrice}",
+                    Tag = product,
+                    Width = 120,
+                    Height = 60,
+                    Margin = new Thickness(5),
+                    Background = new SolidColorBrush(Color.FromRgb(0, 242, 255)),
+                    Foreground = Brushes.Black,
+                    FontWeight = FontWeights.Bold
+                };
+                button.Click += ProductButton_Click;
+                ProductPanel.Children.Add(button);
+            }
+        }
+        private void ProductButton_Click(object sender, RoutedEventArgs e)
+        {
+           //Implementing next
+        }
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Logout feature not implemented yet.");
