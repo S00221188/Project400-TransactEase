@@ -114,8 +114,80 @@ namespace Project400_TransactEase
 
         private void Bill_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Bill feature not implemented yet."); //Implement a split bill option here or elsewhere
+            if (!currentBill.Any())
+            {
+                MessageBox.Show("No items in the bill.");
+                return;
+            }
+
+            // Group items by product name
+            var groupedItems = currentBill.GroupBy(p => p.ProductName)
+                .Select(g => new
+                {
+                    ProductName = g.Key,
+                    Quantity = g.Count(),
+                    Price = g.First().ProductPrice,
+                    VATRate = g.First().VATRate,
+                    LineTotal = g.Sum(p => p.ProductPrice)
+                })
+                .ToList();
+
+            StringBuilder bill = new StringBuilder();
+            bill.AppendLine("Bill:");
+            bill.AppendLine($"Server:{loggedInEmployee.FirstName}");
+            bill.AppendLine($"Time {DateTime.Now:dd/MM/yyyy HH:mm}");
+            bill.AppendLine("Item                  Qty   Price     Total");
+            bill.AppendLine("----------------------------------------------");
+
+            foreach (var item in groupedItems)
+            {
+                bill.AppendLine($"{item.ProductName,-20} {item.Quantity,3}   €{item.Price,6:F2}   €{item.LineTotal,7:F2}"); //ChatGPT helped formatting for clean alignment
+            }
+
+            decimal grossTotal = groupedItems.Sum(i => i.LineTotal);
+            bill.AppendLine("----------------------------------------------");
+            bill.AppendLine($"Gross Total:                         €{grossTotal:F2}");
+            bill.AppendLine("----------------------------------------------\n");
+
+            //Vat breakdown
+            var vatBreakdown = groupedItems
+                .GroupBy(i => i.VATRate) //This will group by VAT rate i.e. hot food 13.5% if/when added in future
+                .Select(g => new
+                {
+                    VATRate = g.Key,
+                    Gross = g.Sum(i => i.LineTotal),
+                    Net = g.Sum(i => i.LineTotal / (1 + g.Key)),
+                    VAT = g.Sum(i => i.LineTotal) - g.Sum(i => i.LineTotal / (1 + g.Key))
+                })
+                .ToList();
+
+            bill.AppendLine("VAT Breakdown:");
+            bill.AppendLine("Rate      Net        VAT        Gross");
+            bill.AppendLine("----------------------------------------------");
+
+            decimal totalVAT = 0;
+            decimal totalNet = 0;
+
+            foreach (var v in vatBreakdown)
+            {
+                totalNet += v.Net;
+                totalVAT += v.VAT;
+                bill.AppendLine(
+                    $"{(v.VATRate * 100),2}%   €{v.Net,8:F2}   €{v.VAT,8:F2}   €{v.Gross,8:F2}");
+            }
+
+            bill.AppendLine("----------------------------------------------");
+            bill.AppendLine($"Total Net:                          €{totalNet:F2}");
+            bill.AppendLine($"Total VAT:                          €{totalVAT:F2}");
+            bill.AppendLine($"Total (Gross):                      €{grossTotal:F2}");
+            bill.AppendLine("----------------------------------------------\n");
+            bill.AppendLine("Note: This is a customer bill summary.");
+            bill.AppendLine("A full VAT invoice can be generated on request."); //Future when sales history is implemented, payment done -> generate invoice with all needed details
+
+            MessageBox.Show(bill.ToString(), "Current Bill");
         }
+
+
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {

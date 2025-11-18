@@ -106,6 +106,10 @@
     <Compile Include="Migrations\202511052050098_InitialCreate.Designer.cs">
       <DependentUpon>202511052050098_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511180414575_VatAdded.cs" />
+    <Compile Include="Migrations\202511180414575_VatAdded.Designer.cs">
+      <DependentUpon>202511180414575_VatAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppDBContext.cs" />
     <Compile Include="Models\ClockInRecord.cs" />
@@ -128,6 +132,9 @@
     </Compile>
     <EmbeddedResource Include="Migrations\202511052050098_InitialCreate.resx">
       <DependentUpon>202511052050098_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511180414575_VatAdded.resx">
+      <DependentUpon>202511180414575_VatAdded.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
