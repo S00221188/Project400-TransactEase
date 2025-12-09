@@ -107,11 +107,6 @@ namespace Project400_TransactEase
             MessageBox.Show("Logged out successfully.");
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Settings feature not implemented yet.");
-        }
-
         private void Bill_Click(object sender, RoutedEventArgs e)
         {
             if (!currentBill.Any())
@@ -191,19 +186,34 @@ namespace Project400_TransactEase
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Clear feature not implemented yet.");
+            currentBill.Clear();
+            BillList.Items.Clear();
+            UpdateTotal(); //In future, Addition of Void handling will be implemented
         }
 
         private void Pay_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Pay feature not implemented yet."); // Cash Card or voucher
+            // Cash Card or voucher
+            if (!currentBill.Any())
+            {
+                MessageBox.Show("No items in the bill.");
+                return;
+            }
+
+            var total = currentBill.Sum(p => p.ProductPrice);
+            //Need to implement history next - Handle Stock Control and Sales History
         }
 
         private void Tabs_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Tabs feature not implemented yet.");
         }
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            var settings = new SettingsWindow(loggedInEmployee);
+            settings.Show();
+            //this.Close(); //This seems to cause LoggedInEmployee data to disappear
+        }
 
-        
     }
 }
