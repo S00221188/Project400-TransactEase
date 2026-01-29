@@ -201,7 +201,17 @@ namespace Project400_TransactEase
             }
 
             var total = currentBill.Sum(p => p.ProductPrice);
-            //Need to implement history next - Handle Stock Control and Sales History
+            //Need to implement Stock Control next
+            var paymentWindow = new PaymentWindow(total, loggedInEmployee, currentBill);
+            paymentWindow.ShowDialog();
+
+            if (paymentWindow.SaleCompleted)
+            {
+                currentBill.Clear();
+                BillList.Items.Clear();
+                UpdateTotal();
+                MessageBox.Show("Payment successful. Sale recorded.");
+            }
         }
 
         private void Tabs_Click(object sender, RoutedEventArgs e)

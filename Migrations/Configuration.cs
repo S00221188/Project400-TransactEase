@@ -92,7 +92,7 @@
         new Product { ProductName = "King Crisps", ProductPrice = 1.80m, ProductType = "Snack", ProductStockCount = 100, VATRate = 0.23m },
         new Product { ProductName = "Peanuts", ProductPrice = 2.00m, ProductType = "Snack", ProductStockCount = 80, VATRate = 0.23m }
 
-        //VAT Rate are the following -- To be changed January 2026, government budget VAT reductions
+        // VAT Rate are the following -- To be changed January 2026, government budget VAT reductions
         // Draft, Bottle, Shot, Cocktail, Soft Drink, Snack = 0.23m
         // If hot food is added in future updates = 0.135m
 

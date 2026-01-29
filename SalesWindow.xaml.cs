@@ -25,6 +25,8 @@ namespace Project400_TransactEase
         {
             InitializeComponent();
             loggedInEmployee = employee;
+            StartDate_Filter.SelectedDate = DateTime.Now.AddDays(-7); // Default to last 7 days
+            EndDate_Filter.SelectedDate = DateTime.Now; // Default to today
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -33,7 +35,51 @@ namespace Project400_TransactEase
         }
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Filter Not yet fully implemented.");
+            var startDate = StartDate_Filter.SelectedDate ?? DateTime.MinValue;
+            var endDate = EndDate_Filter.SelectedDate?.Date.AddDays(1) ?? DateTime.MaxValue;
+
+            using (var db = new AppDBContext())
+            {
+                var sales = db.Sales
+                    .Where(s => s.SaleTime >= startDate && s.SaleTime <= endDate)
+                    .OrderByDescending(s => s.SaleTime)
+                    .ToList();
+
+                SalesList.Items.Clear();
+
+                foreach (var sale in sales)
+                {
+                    var employee = db.Employees.Find(sale.EmployeeID);
+                    SalesList.Items.Add($"#{sale.SaleID} | {sale.SaleTime} | Employee: {employee.FirstName} {employee.LastName} | Total: €{sale.TotalAmount:F2}");
+                }    
+            }
+        }
+
+        private void SalesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaleDetailsList.Items.Clear();
+
+            if (SalesList.SelectedItem == null)
+                return;
+
+            var selectedText = SalesList.SelectedItem.ToString();
+            if (!selectedText.StartsWith("#")) return;
+
+            var saleIdPart = selectedText.Split('|')[0].Trim().TrimStart('#');
+            if (!int.TryParse(saleIdPart, out int saleId)) return;
+
+            using (var db = new AppDBContext())
+            {
+                var saleItems = db.SaleItems
+                                  .Where(si => si.SaleID == saleId)
+                                  .ToList();
+
+                foreach (var item in saleItems)
+                {
+                    var product = db.Products.Find(item.ProductID);
+                    SaleDetailsList.Items.Add($"{product.ProductName} x{item.Quantity} - €{item.UnitPrice * item.Quantity:F2}");
+                }
+            }
         }
     }
 }

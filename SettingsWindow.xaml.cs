@@ -43,19 +43,19 @@ namespace Project400_TransactEase
 
         private void SalesHistory_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("History feature not implemented yet.");
             var salesWindow = new SalesWindow(loggedInEmployee);
             salesWindow.Show();
         }
         private void EndOfDay_Click(object sender, RoutedEventArgs e)
         {
-            if (loggedInEmployee.Role !="Admin" && loggedInEmployee.Role !="Manager") //Need to test with Staff Role user Logged in.
+            if (loggedInEmployee.Role != "Admin" && loggedInEmployee.Role != "Manager") //Need to test with Staff Role user Logged in.
             {
                 MessageBox.Show("Access denied. Admin / Manager Access Only");
             }
-
+            else
+            { 
             MessageBox.Show("End of Day feature not implemented yet.");
-            
+           }
         }
         private void ActiveUsers_Click(object sender, RoutedEventArgs e)
         {

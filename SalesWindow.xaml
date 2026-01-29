@@ -22,8 +22,10 @@
             </UniformGrid>
             <!--Filtered Sales History-->
             <TextBlock Text="Sales" FontSize="12" FontWeight="Bold" Margin="0,0,0,0"/>
-            <ListBox Name="SalesList" Height="100" Background="White" Margin="0,10"/>
-            <!--Sale Breakdown to be implemented below-->
+            <ListBox Name="SalesList" Height="150" Margin="0,10" SelectionChanged="SalesList_SelectionChanged"/>
+
+            <TextBlock Text="Sale Details:" FontWeight="Bold" Margin="0,10,0,0"/>
+            <ListBox Name="SaleDetailsList" Height="150"/>
         </StackPanel>
     </Grid>
 </Window>
