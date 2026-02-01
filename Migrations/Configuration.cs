@@ -31,6 +31,15 @@
                     LastName = "Sharkey",
                     Role = "Admin"
                 });
+            context.Employees.AddOrUpdate(e => e.Username,
+               new Models.Employee
+               {
+                   Username = "employee",
+                   Password = BCrypt.HashPassword("1234"), //Password changed now to Pin code
+                   FirstName = "Malachy",
+                   LastName = "Sharkey",
+                   Role = "Employee"
+               });
 
             //Seeding Initial Products
             context.Products.AddOrUpdate(p => p.ProductName,

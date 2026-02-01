@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project400_TransactEase"
         mc:Ignorable="d"
-        Title="PaymentWindow" Height="450" Width="800">
+        Title="PaymentWindow" Height="720" Width="1200" WindowStartupLocation="CenterScreen">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -40,8 +40,11 @@
                 <Button Content="7" Click="NumberPadButton_Click" FontSize="15"/>
                 <Button Content="8" Click="NumberPadButton_Click" FontSize="15"/>
                 <Button Content="9" Click="NumberPadButton_Click" FontSize="15"/>
-                <Button Content="Clear" Click="ClearAmountButton_Click" FontSize="15"/>
+                <Button Content="." Click="NumberPadButton_Click" FontSize="15"/>
                 <Button Content="0" Click="NumberPadButton_Click" FontSize="15"/>
+                <Button Content="" Click="NumberPadButton_Click" FontSize="15"/>
+                <Button Content="Clear" Click="ClearAmountButton_Click" FontSize="15"/>
+                <Button Content="" Click="NumberPadButton_Click" FontSize="15"/>
                 <Button Content="Del" Click="BackSpaceButton_Click" FontSize="15"/>
             </UniformGrid>
 

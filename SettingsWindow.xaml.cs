@@ -66,11 +66,23 @@ namespace Project400_TransactEase
             //    MessageBox.Show("Access denied. Admin / Manager Access Only");
             //}
 
-            if (loggedInEmployee.Role != "Admin" && loggedInEmployee.Role != "Manager") //Need to test with Staff Role user Logged in.
+            if (loggedInEmployee.Role != "Admin" && loggedInEmployee.Role != "Manager") 
             {
                 MessageBox.Show("Access denied. Admin / Manager Access Only");
             }
             MessageBox.Show("Active Users feature not implemented yet.");
+        }
+        private void ViewUsers_Click(object sender, RoutedEventArgs e)
+        {
+            if (loggedInEmployee.Role != "Admin" && loggedInEmployee.Role != "Manager")
+            {
+                MessageBox.Show("Access denied. Admin / Manager Access Only");
+            }
+            else
+            {
+                var ViewUsersWindow = new ViewUsersWindow(loggedInEmployee);
+                ViewUsersWindow.Show();
+            }
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {

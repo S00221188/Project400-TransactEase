@@ -1,0 +1,64 @@
+﻿<Window x:Class="Project400_TransactEase.ViewUsersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project400_TransactEase"
+        mc:Ignorable="d"
+        Title="ViewUsersWindow" Height="720" Width="1200" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <!-- User List -->
+        <StackPanel Grid.Column="0" Margin="0,0,15,0">
+            <TextBlock Text="Users" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+            <TextBlock Text="Search User Name" FontWeight="Bold"/>
+            <TextBox Name="SearchBox" Margin="0,5" Height="20"/>
+
+            <UniformGrid Columns="3" Margin="0,10,0,10">
+                <Button Content="Back" Height="20" Click="Back_Click" Margin="0,0,10,0"/>
+                <Button Content="Search" Height="20" Click="Search_Click" Margin="0,0,10,0"/>
+                <Button Content="Refresh" Height="20" Click="Refresh_Click" Margin="0,0,10,0"/>
+            </UniformGrid>
+
+            <TextBlock Text="Employees" FontWeight="Bold"/>
+            <ListBox Name="UserList" Height="250" Margin="0,10" SelectionChanged="UserList_SelectionChanged"/> 
+        </StackPanel>
+        <!-- User Details + Adding New User -->
+        <StackPanel Grid.Column="1">
+            <TextBlock Text="Selected User Details" FontWeight="Bold"/>
+            <ListBox Name="UserDetailsList" Height="120" Margin="0,10"/>
+            
+            <Separator Margin="0,10"/>
+            
+            <TextBlock Text="Add New User" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+            <TextBlock Text="User Name" FontWeight="Bold"/>
+            <TextBox Name="UsernameBox" Margin="0,5" Height="20"/>
+
+            <TextBlock Text="PIN (Password)" FontWeight="Bold"/>
+            <PasswordBox Name="PinBox" Margin="0,5" Height="28" MaxLength="6"/>
+
+            <TextBlock Text="First Name" FontWeight="Bold"/>
+            <TextBox Name="FirstNameBox" Margin="0,5" Height="28"/>
+
+            <TextBlock Text="Last Name" FontWeight="Bold"/>
+            <TextBox Name="LastNameBox" Margin="0,5" Height="28"/>
+
+            <TextBlock Text="Role" FontWeight="Bold"/>
+            <ComboBox Name="RoleBox" Margin="0,5" Height="28">
+                <ComboBoxItem Content="Admin"/>
+                <ComboBoxItem Content="Manager"/>
+                <ComboBoxItem Content="Employee"/>
+            </ComboBox>
+
+            <UniformGrid Columns="2" Margin="0,15,0,0">
+                <Button Content="Add Employee" Height="40" Click="AddEmployee_Click" Margin="0,0,10,0"/>
+                <Button Content="Clear Form" Height="40" Click="ClearForm_Click"/>
+            </UniformGrid>
+
+            <TextBlock Name="StatusText" Foreground="Red" Margin="0,15,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+    </Grid>
+</Window>

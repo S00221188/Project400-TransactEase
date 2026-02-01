@@ -12,6 +12,7 @@
             <Button Content="View Sales History" Click="SalesHistory_Click" Height="40" Margin="0,5"/>
             <Button Content="End of Day Reading (To be moved to a Manager Actions Window)" Click="EndOfDay_Click" Height="40" Margin="0,5"/>
             <Button Content="View Clocked in Users (To be moved to a Manager Actions Window)" Click="ActiveUsers_Click" Height="40" Margin="0,5"/>
+            <Button Content="View Users (To be moved to a Manager Actions Window)" Click="ViewUsers_Click" Height="40" Margin="0,5"/>
             <Button Content="Manager Actions" Click="ActiveUsers_Click" Height="40" Margin="0,5"/>
             <Button Content="Back to Till Window" Click="Back_Click" Height="40" Margin="0,5"/>
         </StackPanel>

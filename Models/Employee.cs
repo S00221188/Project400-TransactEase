@@ -15,7 +15,7 @@ namespace Project400_TransactEase.Models
         public string FirstName { get; set; } = string.Empty; //Purely for identification purposes
         public string LastName { get; set; } = string.Empty; //Purely for identification purposes
         //Employee Roll (i.e. Staff, Manager, Admin)
-        public string Role { get; set; } = "Staff"; //Defaulted option
+        public string Role { get; set; } = "Employee"; //Defaulted option - Changed to Employee
 
     }
 }
