@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Project400_TransactEase"
         mc:Ignorable="d"
         Title="LoginWindow" Height="720" Width="1200" WindowStartupLocation="CenterScreen">
@@ -16,31 +17,51 @@
             <Image Source="Assets/TransactEaseLogo.png" Height="100" Margin="10"/>
 
             <!-- Employee Pin entry display Future plans for biometric login -->
-            <TextBlock Text="Enter PIN" Foreground="#00F2FF" Margin="10,20,10,0"/>
-            <PasswordBox Name="PinBox" Margin="10,5" FontSize="10" HorizontalContentAlignment="Center" VerticalAlignment="Center" MaxLength="6"></PasswordBox>
-            <!-- Number Pad -->
-            <UniformGrid Rows="4" Columns="3" Margin="10">
-                <Button Content="1" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="2" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="3" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="4" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="5" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="6" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="7" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="8" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="9" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="Clear" Click="ClearPinButton_Click" FontSize="15"/>
-                <Button Content="0" Click="PinButton_Click" FontSize="15"/>
-                <Button Content="Del" Click="BackSpaceButton_Click" FontSize="15"/>
+            <!--<TextBlock Text="Enter PIN" Foreground="#00F2FF" Margin="10,20,10,0"/> -->
+            <!-- <PasswordBox Name="PinBox" Margin="10,5" FontSize="10" HorizontalContentAlignment="Center" VerticalAlignment="Center" MaxLength="6"/> -->
+            <PasswordBox Name="PinBox"
+                         Margin="10,10"
+                         FontSize="15"
+                         Width="200"
+                         Height="50"
+                         HorizontalAlignment="Center"
+                         materialDesign:HintAssist.Hint="Enter PIN"
+                         Background="AntiqueWhite"
+                         Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                         MaxLength="6"/>
+                <!-- Number Pad -->
+            <UniformGrid Rows="4" Columns="3" Margin="15">
+                <Button Content="1" Click="PinButton_Click" FontSize="15" Margin="5" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="2" Click="PinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="3" Click="PinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="4" Click="PinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="5" Click="PinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="6" Click="PinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="7" Click="PinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="8" Click="PinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="9" Click="PinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="Clear" Click="ClearPinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="0" Click="PinButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+                <Button Content="Del" Click="BackSpaceButton_Click" FontSize="15" Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"/>
+
             </UniformGrid>
             <!-- Buttons -->
             <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
-                <Button Name="ClockInBtn" Click="LoginAndClockInBtn_Click" Content="Clock In" Width="100" Background="Blue" Foreground="White" Margin="0,5,5,0"/>
-                <Button Name="ClockOutBtn" Click="ClockOutBtn_Click" Content="Clock Out" Width="100" Background="Red" Foreground="White" Margin="5,5,0,0"/>
-            </StackPanel>
-            <Button Content="Login" Name="LoginBtn" Click="LoginAndClockInBtn_Click" Margin="10,10" Height="35" Background="LightGreen" FontWeight="Bold"/>
+                <!-- <Button Name="ClockInBtn" Click="LoginAndClockInBtn_Click" Content="Clock In" Width="100" Background="Blue" Foreground="White" Margin="5"/> -->
+                <!--<Button Name="ClockOutBtn" Click="ClockOutBtn_Click" Content="Clock Out" Width="100" Background="Red" Foreground="White" Margin="5"/> -->
 
+                <Button Name="ClockInBtn" Click="LoginAndClockInBtn_Click" Content="Clock In" Style="{StaticResource MaterialDesignRaisedButton}" Background="Blue" Foreground="White" Width="100" Margin="5"/>
+                <Button Name="ClockOutBtn" Click="ClockOutBtn_Click" Content="Clock Out" Style="{StaticResource MaterialDesignRaisedButton}" Background="Red" Foreground="White" Width="100" Margin="5" />
+            </StackPanel>
+            <Button Content="Login" Name="LoginBtn" Click="LoginAndClockInBtn_Click" Margin="10,10" Height="35" Style="{StaticResource MaterialDesignRaisedButton}"/>
+          <!-- Test Button for Material Design
+            <Button Content="Test Button"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Width="200"
+                    Height="40"/>
+            -->
             <TextBlock Name="ErrorText" Foreground="Red" Margin="10,10,10,0" TextWrapping="Wrap" TextAlignment="Center"/>
+
         </StackPanel>
         <!-- Right Panel (Reserved for Future Development, Carousel for Venue events)-->
         <Grid Grid.Column="1" Background="#3D1F1F">
