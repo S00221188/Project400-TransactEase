@@ -229,9 +229,31 @@ namespace Project400_TransactEase
            if (sender is Button btn && btn.Tag is Product product)
             {
                 currentBill.Add(product);
-                BillList.Items.Add($"{product.ProductName} - €{product.ProductPrice}");
+                //BillList.Items.Add($"{product.ProductName} - €{product.ProductPrice}");
+                RefreshBillDisplay();
                 UpdateTotal();
             }
+        }
+
+        private void RefreshBillDisplay()
+        {
+            BillList.Items.Clear();
+
+            var groupedItems = currentBill.GroupBy(p=> p.ProductName)
+                .Select(g => new
+                {
+                    Name = g.Key,
+                    Quantity = g.Count(),
+                    Price = g.First().ProductPrice,
+                    Total = g.Sum(p => p.ProductPrice)
+                })
+                .ToList();
+
+            foreach (var item in groupedItems)
+            {
+                BillList.Items.Add($"{item.Name} x{item.Quantity} - €{item.Total:F2}");
+            }    
+
         }
         private void UpdateTotal()
         {
@@ -330,6 +352,7 @@ namespace Project400_TransactEase
         {
             currentBill.Clear();
             BillList.Items.Clear();
+            RefreshBillDisplay();
             UpdateTotal(); //In future, Addition of Void handling will be implemented
         }
 
@@ -381,12 +404,30 @@ namespace Project400_TransactEase
 
         private void BillList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (BillList.SelectedIndex >= 0)
+            //if (BillList.SelectedIndex >= 0)
+            //{
+            //    currentBill.RemoveAt(BillList.SelectedIndex);
+            //    BillList.Items.RemoveAt(BillList.SelectedIndex);
+            //    UpdateTotal();
+            //}
+
+            //New Logic as Bill now displays grouped items with quantity, double-clicking will remove one quantity of the selected item
+
+            if (BillList.SelectedItem == null)
+                return;
+
+            string selectedText = BillList.SelectedItem.ToString();
+
+            string productName = selectedText.Split('x')[0].Trim();
+
+            var itemToRemove = currentBill.FirstOrDefault(p => p.ProductName == productName);
+
+            if (itemToRemove != null)
             {
-                currentBill.RemoveAt(BillList.SelectedIndex);
-                BillList.Items.RemoveAt(BillList.SelectedIndex);
-                UpdateTotal();
+                currentBill.Remove(itemToRemove);
             }
+            RefreshBillDisplay();
+            UpdateTotal();
         }
     }
 }
