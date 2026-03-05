@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Project400_TransactEase.Models;
 
 namespace Project400_TransactEase
@@ -33,32 +34,195 @@ namespace Project400_TransactEase
             LoadProducts();
         }
 
-        private void LoadProducts()
+        #region Product Loading and Display
+
+        private Brush GetCategoryColor(string productType)
+        {
+            //Nielsen Heuristic Recognition rather than recall (no. 6)
+            switch (productType)
+            {
+                case "Draft":
+                    return new SolidColorBrush(Color.FromRgb(251, 177, 23)); //Beer - Yellow
+                case "Bottle":
+                    return new SolidColorBrush(Color.FromRgb(76, 175, 80)); //Bottle - Green
+                case "Shot":
+                    return new SolidColorBrush(Color.FromRgb(255, 152, 0)); //Shot - Orange
+                case "Cocktail":
+                    return new SolidColorBrush(Color.FromRgb(156, 39, 176)); //Cocktail - Purple
+                case "Soft Drink":
+                    return new SolidColorBrush(Color.FromRgb(255, 0, 0)); //Soft Drink - Red
+                case "Snack":
+                    return new SolidColorBrush(Color.FromRgb(121, 85, 72)); //Snack - Brown
+
+                default:
+                    return new SolidColorBrush(Color.FromRgb(158, 158, 158)); 
+            }
+        }
+
+        //New Loading & Filtering with Category Colours - Co-Pilot suggested improvement
+
+        private void DisplayProducts(List<Product> products)
         {
             ProductPanel.Children.Clear();
 
+            foreach (var product in products)
+            {
+                var button = new Button
+                {
+                    Tag = product,
+                    Width = 150,
+                    Height = 90,
+                    Margin = new Thickness(8),
+                    Style = (Style)FindResource("MaterialDesignRaisedButton"),
+                    Background = GetCategoryColor(product.ProductType),
+                    Foreground = Brushes.White
+                };
+
+                var panel = new StackPanel()
+                {
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
+                var nameText = new TextBlock
+                {
+                    Text = product.ProductName,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 14,
+                    Foreground= Brushes.Black,
+                    TextAlignment = TextAlignment.Center,
+                    TextWrapping = TextWrapping.Wrap
+                };
+
+                var priceText = new TextBlock
+                {
+                    Text = $"€{product.ProductPrice:F2}",
+                    FontSize = 18,
+                    FontWeight = FontWeights.SemiBold,
+                    Foreground = Brushes.Black,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+
+                panel.Children.Add(nameText);
+                panel.Children.Add(priceText);
+
+                button.Content = panel;
+
+                button.Click += ProductButton_Click;
+
+                ProductPanel.Children.Add(button);
+            }
+        }
+
+        //Simplified LoadProducts
+
+        private void LoadProducts()
+        {
             using (var db = new AppDBContext())
             {
                 allProducts = db.Products.Where(p => !p.IsDiscontinued).OrderBy(p => p.ProductType).ToList();
             }
-            // Create buttons for each product
-            foreach (var product in allProducts)
+            DisplayProducts(allProducts);
+            StartClock();
+        }
+
+        //Simplified Filter_Click
+
+        private void Filter_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string productType)
             {
-                var button = new Button
+                if (productType == "All")
                 {
-                    Content = $"{product.ProductName}\n€{product.ProductPrice}",
-                    Tag = product,
-                    Width = 120,
-                    Height = 60,
-                    Margin = new Thickness(5),
-                    Background = new SolidColorBrush(Color.FromRgb(0, 242, 255)),
-                    Foreground = Brushes.Black,
-                    FontWeight = FontWeights.Bold
-                };
-                button.Click += ProductButton_Click;
-                ProductPanel.Children.Add(button);
+                    DisplayProducts(allProducts);
+                }
+                else
+                {
+                    var filtered = allProducts.Where(p => p.ProductType == productType).ToList();
+                    DisplayProducts(filtered);
+                }
             }
         }
+
+        //private void LoadProducts()
+        //{
+        //    ProductPanel.Children.Clear();
+
+        //    using (var db = new AppDBContext())
+        //    {
+        //        allProducts = db.Products.Where(p => !p.IsDiscontinued).OrderBy(p => p.ProductType).ToList();
+        //    }
+        //    // Create buttons for each product
+        //    foreach (var product in allProducts)
+        //    {
+        //        var button = new Button
+        //        {
+        //            Content = $"{product.ProductName}\n€{product.ProductPrice}",
+        //            Tag = product,
+        //            Width = 150,
+        //            Height = 90,
+        //            Margin = new Thickness(8),
+        //            Style = (Style)FindResource("MaterialDesignRaisedButton"),
+        //            Background = new SolidColorBrush(Color.FromRgb(33, 150, 243)),
+        //            Foreground = Brushes.White,
+        //        };
+
+        //        var panel = new StackPanel
+        //        {
+        //            VerticalAlignment = VerticalAlignment.Center,
+        //        };
+
+        //        var nameText = new TextBlock
+        //        {
+        //            Text = product.ProductName,
+        //            FontWeight = FontWeights.Bold,
+        //            FontSize = 14,
+        //            TextAlignment = TextAlignment.Center,
+        //            TextWrapping = TextWrapping.Wrap
+        //        };
+
+        //        var priceText = new TextBlock
+        //        {
+        //            Text= $"€{product.ProductPrice:F2}",
+        //            FontSize= 16,
+        //            FontWeight= FontWeights.SemiBold,
+        //            HorizontalAlignment = HorizontalAlignment.Center
+        //        };
+
+        //        panel.Children.Add(nameText);
+        //        panel.Children.Add(priceText);
+
+        //        button.Content = panel;
+
+        //        button.Click += ProductButton_Click;
+        //        ProductPanel.Children.Add(button);
+        //    }
+        //}
+
+        //private void Filter_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (sender is Button btn && btn.Tag is string productType)
+        //    {
+        //        ProductPanel.Children.Clear();
+        //        var filter = productType == "All" ? allProducts : allProducts.Where(p => p.ProductType == productType).ToList(); //Co-Pilot suggested improvement
+
+        //        foreach (var product in filter)
+        //        {
+        //            var button = new Button
+        //            {
+        //                Content = $"{product.ProductName}\n€{product.ProductPrice}",
+        //                Tag = product,
+        //                Width = 120,
+        //                Height = 60,
+        //                Margin = new Thickness(5),
+        //                Background = new SolidColorBrush(Color.FromRgb(0, 242, 255)),
+        //                Foreground = Brushes.Black,
+        //                FontWeight = FontWeights.Bold
+        //            };
+        //            button.Click += ProductButton_Click;
+        //            ProductPanel.Children.Add(button);
+        //        }
+        //    }
+        //}
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
            //adds products to current bill - 1st phase, Multiple running tabs not currently developed
@@ -74,31 +238,9 @@ namespace Project400_TransactEase
             decimal total = currentBill.Sum(p => p.ProductPrice);
             TotalText.Text= $"€{total:F2}";
         }
-        private void Filter_Click(object sender, RoutedEventArgs e)
-        {
-            if(sender is Button btn && btn.Tag is string productType)
-            {
-                ProductPanel.Children.Clear();
-                var filter = productType == "All" ? allProducts : allProducts.Where(p => p.ProductType == productType).ToList(); //Co-Pilot suggested improvement
 
-                foreach (var product in filter)
-                {
-                    var button = new Button
-                    {
-                        Content = $"{product.ProductName}\n€{product.ProductPrice}",
-                        Tag = product,
-                        Width = 120,
-                        Height = 60,
-                        Margin = new Thickness(5),
-                        Background = new SolidColorBrush(Color.FromRgb(0, 242, 255)),
-                        Foreground = Brushes.Black,
-                        FontWeight = FontWeights.Bold
-                    };
-                    button.Click += ProductButton_Click;
-                    ProductPanel.Children.Add(button);
-                }
-            }
-        }
+        #endregion
+        #region Interface Button Handlers
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             var login = new LoginWindow();
@@ -224,6 +366,27 @@ namespace Project400_TransactEase
             settings.Show();
             //this.Close(); //This seems to cause LoggedInEmployee data to disappear
         }
+        #endregion
+        private void StartClock()
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
 
+            timer.Tick += (s, e) =>
+            {
+                DateTimeText.Text = DateTime.Now.ToString("dddd dd MMM  HH:mm:ss");
+            };
+            timer.Start();
+        }
+
+        private void BillList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (BillList.SelectedIndex >= 0)
+            {
+                currentBill.RemoveAt(BillList.SelectedIndex);
+                BillList.Items.RemoveAt(BillList.SelectedIndex);
+                UpdateTotal();
+            }
+        }
     }
 }

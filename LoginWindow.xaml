@@ -6,14 +6,15 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Project400_TransactEase"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="720" Width="1200" WindowStartupLocation="CenterScreen">
+        Title="LoginWindow" Height="720" Width="1200" WindowStartupLocation="CenterScreen" Background="#3D3D3D">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!-- Sidebar -->
-        <StackPanel Background="#3D3D3D" Grid.Column="0" VerticalAlignment="Stretch">
+        <materialDesign:Card Grid.Column="0" Margin="20" Padding="20" Background="#3D3D3D"></materialDesign:Card>
+        <StackPanel>
             <Image Source="Assets/TransactEaseLogo.png" Height="100" Margin="10"/>
 
             <!-- Employee Pin entry display Future plans for biometric login -->
