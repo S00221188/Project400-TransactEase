@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TransactEase.API.Models
+{
+    public class ClockInRecord
+    {
+        [Key]
+        public int ClockInID { get; set; }
+        public int EmployeeID { get; set; } //Foreign key, links employee to Clock in record
+        public DateTime ClockInTime { get; set; }
+        public DateTime? ClockOutTime { get; set; }  //Null until employee clocks out
+
+        public virtual Employee Employee { get; set; }
+    }
+}
